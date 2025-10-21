@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded",() => {
     
     const wordObjList = [];
     const wordLength = 20
-    const panelContainer = document.getElementById("panel-container");
+    const panelContainer = document.getElementsByClassName("panel-container")[0];
     const wordCountText = document.getElementById("WordCount");
     const missMountText = document.getElementById("missMount");
     const timeText = document.getElementById("timeText");
@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded",() => {
             panel.appendChild(typedSpan);
             panel.appendChild(untypedSpan);
             panelContainer.appendChild(panel);
+            panelContainer.classList.add('panel-container-play')
             panel.addEventListener("mouseenter",(event) => {
                 if (startFlag == 3) {
                     event.target.firstElementChild.textContent = ""
@@ -93,12 +94,10 @@ document.addEventListener("DOMContentLoaded",() => {
                     event.target.lastElementChild.textContent = wordObjList[i]["untyped"]
                 }
             })
-            //最初のはここで光らせて置く。
-            if(i == 0) {
-                panel.classList.add("active");
-            }
         }
-        randomPanelPlacement()
+        // randomPanelPlacement()
+        //最初のはここで光らせて置く。
+        document.getElementById("panel-0").classList.add("active")
     }
 
     // 重なりなし
@@ -231,7 +230,6 @@ document.addEventListener("DOMContentLoaded",() => {
             table.appendChild(tableRow);
         })
         wordMeanSection.style.display = "block";
-        resultSection.style.display = "flex";
     }
 
     function processEndGame(){
@@ -242,6 +240,7 @@ document.addEventListener("DOMContentLoaded",() => {
         const score = parseInt((letterCount + missTypeCount) / stopTime * 60000 * (letterCount / (letterCount + missTypeCount)) ** 3);
         scoreText.textContent = `SCORE : ${score}`;
         otherResult.textContent = `合計入力文字数（ミスを含む):${typeCount}`;
+        resultSection.style.display = "flex";
         // 全パネルのハイライトを消す
         for (let i = 0; i < wordLength; i++) {
             const panel = document.getElementById("panel-" + i);
@@ -251,9 +250,9 @@ document.addEventListener("DOMContentLoaded",() => {
             }    
         }
         startFlag = 3
-        resultIndicate();
+        // resultIndicate();
         window.scrollTo({
-            top: 700,      // 縦スクロールの位置
+            top: 100,      // 縦スクロールの位置
             left: 0,     // 横スクロールの位置（通常は 0 のままでOK）
             behavior: "smooth"
         })
@@ -307,8 +306,8 @@ document.addEventListener("DOMContentLoaded",() => {
         else if(startFlag == 2 && event.key.length < 2 && event.key.match(/^[a-zA-Z0-9!-/:-@¥[-`{-~\s]*$/)){
             inputCheck(event.key);
         }
-        else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
-            this.location.reload()
-        }
+        // else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
+        //     this.location.reload()
+        // }
     })
 })

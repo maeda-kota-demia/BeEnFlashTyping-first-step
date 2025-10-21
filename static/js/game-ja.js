@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded",function() {
     const wordObjList = [];
     const wordLength = 20
     const infoBox = document.getElementById("info");
-    const panelContainer = document.getElementById("panel-container");
+    const panelContainer = document.getElementsByClassName("panel-container")[0];
     const wordCountText = document.getElementById("WordCount");
     const missMountText = document.getElementById("missMount");
     const timeText = document.getElementById("timeText");
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded",function() {
     function wordObjListMake(data){
         const lines = data.split("\n")
         shuffleArray(lines)
-        for(let i=0;i<20;i++){
+        for(let i=0;i<wordLength;i++){
             let word = lines[i].split(",")
             wordObjList.push(
                 new Word(word[0],word[1])
@@ -100,9 +100,13 @@ document.addEventListener("DOMContentLoaded",function() {
             panel.appendChild(enBox);
 
             panelContainer.appendChild(panel);
+            panelContainer.classList.add('panel-container-play')
         }
-        randomPanelPlacement()
+        // randomPanelPlacement()
         //最初のパネルはここで光らせて置く。
+        for(let i = 19;i >= wordLength/2;i--){
+            document.getElementById(`panel-${i}`).style.display = 'none'
+        }
         document.getElementById("panel-0").classList.add("active")
     };
 
@@ -138,6 +142,13 @@ document.addEventListener("DOMContentLoaded",function() {
         }
     }
 
+    function secondFase(){
+        for(let i = 0;i < wordLength/2;i++){
+            document.getElementById(`panel-${i}`).style.display = 'none'
+            document.getElementById(`panel-${i+10}`).style.display = 'flex'
+        }
+    }
+
     function processEndGame(){
         clearTimeout(timeoutID);
         const scoreText = document.getElementById("score");
@@ -156,9 +167,10 @@ document.addEventListener("DOMContentLoaded",function() {
             }    
         }
         startFlag = 3
-        resultIndicate();
+        // resultIndicate();  
+        resultSection.style.display = "flex";
         window.scrollTo({
-            top: 700,      // 縦スクロールの位置
+            top: 100,      // 縦スクロールの位置
             left: 0,     // 横スクロールの位置（通常は 0 のままでOK）
             behavior: "smooth"
         })
@@ -183,7 +195,6 @@ document.addEventListener("DOMContentLoaded",function() {
             table.appendChild(tableRow);
         })
         wordMeanSection.style.display = "block";
-        resultSection.style.display = "flex";
     }
 
     function inputCheck(key){
@@ -209,11 +220,14 @@ document.addEventListener("DOMContentLoaded",function() {
                 untypedKana.textContent = "";
                 current += 1;
                 wordCountText.textContent = current;
-                if(current == wordObjList.length){
+                if(current == wordLength){
                     // ゲームの終了
                     processEndGame()
                 }
                 else{
+                    if(current == wordLength/2){
+                        secondFase()
+                    }
                     highlightCurrentPanel()
                     typedKana = document.getElementById(`kana_typed-${current}`);
                     untypedKana = document.getElementById(`kana_untyped-${current}`);
@@ -255,8 +269,8 @@ document.addEventListener("DOMContentLoaded",function() {
         else if(startFlag == 2 && event.key.length < 2 && event.key.match(/^[a-zA-Z0-9!-/:-@¥[-`{-~\s]*$/)){
             inputCheck(event.key);
         }
-        else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
-            this.location.reload()
-        }
+        // else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
+        //     this.location.reload()
+        // }
     })
 })
