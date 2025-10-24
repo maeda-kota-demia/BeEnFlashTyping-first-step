@@ -127,8 +127,6 @@ input {
   height: 60vh;
   min-width: 400px;
   position: relative;
-  /* justify-content: space-around;
-  align-items: center; */
   margin: 0 auto;
 }
 
@@ -136,37 +134,24 @@ input {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5列 */
   grid-template-rows: repeat(4, 1fr);    /* 4行 */
-  gap: 10px; /* 円の間隔（お好みで） */
+  gap: 10px; 
   justify-items: center;
   align-items: center;
   margin: 0 auto;
 }
 
-/* @keyframes scaleUpDown {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-} */
-
 .panel {
-  /* animation: scaleUpDown 1s infinite; */
   background: #6cf;
   color: #222;
   border-radius: 50%;
   font-size: 1em;
-  /* padding: 0; */
   width: 100px;
   height: 100px;
-  /* aspect-ratio: 1; */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transition: transform 0.3s ease; */
-  /* opacity: 1; */
   font-weight: bold;
   box-shadow: 0 2px 8px #4448;
-  /* position: absolute; */
-  /* 追加 */
   margin-left: 5%;
 }
 .panel:hover{
@@ -238,28 +223,6 @@ input {
   display: block;
   margin-bottom: 1%;
 }
-/* 
-#restart {
-  width: fit-content;
-  margin: 1% auto;;
-}
-
-#word-meanings {
-  margin: 0 auto;
-  width: 40%;
-  min-width: 300px;
-} */
-
 .center {
   text-align: center;
 }
-
-/* .typed-words {
-  display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
-}
-
-.words {
-  width: 45%;
-  margin-left: 5%;
-} */

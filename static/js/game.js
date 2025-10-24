@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded",() => {
     const timeText = document.getElementById("timeText");
     const otherResult = document.getElementById("other-result");
     const resultSection = document.getElementById("results");
-    const wordMeanSection = document.getElementById("word-meanings");
     //効果音
     const clearSound = document.getElementById("type_clear")
     const missSound = document.getElementById("type_miss")
@@ -100,65 +99,6 @@ document.addEventListener("DOMContentLoaded",() => {
         document.getElementById("panel-0").classList.add("active")
     }
 
-    // 重なりなし
-    function randomPanelPlacement() {
-        let isPlaceMiss = false;
-        const container = document.getElementById("panel-container");
-        // HTMLCollectionを配列に変換してforEachを使えるようにする
-        const panels = Array.from(container.getElementsByClassName("panel"));
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
-        const panelSize = panels[0].clientWidth;// 円の直径
-        const panelRadius = panelSize / 2; // 円の半径
-
-        // 配置済み円の中心座標を保持する配列
-        const placedCenters = [];
-        const maxAttempts = 1000;
-
-        panels.forEach(panel => {
-            let newPosition = null;
-            let attempts = 0; // 無限ループを避けるための試行回数上限
-
-            while (attempts < maxAttempts) {
-                // パネルのサイズ分を引いて画面からはみ出ないように設定する
-                const randomLeft = Math.random() * (containerWidth - panelSize);
-                const randomTop = Math.random() * (containerHeight - panelSize);
-                
-                const newCenter = {
-                    x: randomLeft + panelRadius,
-                    y: randomTop + panelRadius,
-                };
-
-                // some() を使って、いずれかの既存の円と重なるかチェック
-                const isOverlapping = placedCenters.some(placedCenter => {
-                    const dx = newCenter.x - placedCenter.x;
-                    const dy = newCenter.y - placedCenter.y;
-                    // Math.sqrtを避け（処理の高速化）、距離の2乗で比較する
-                    return (dx * dx + dy * dy) < (panelSize * panelSize);
-                });
-
-                // 重なっていなければ、その位置を採用してループを抜ける
-                if (!isOverlapping) {
-                    newPosition = { left: randomLeft, top: randomTop, center: newCenter };
-                    break;
-                }
-                attempts++;
-            }
-
-            if (newPosition) {
-                panel.style.left = `${newPosition.left}px`;
-                panel.style.top = `${newPosition.top}px`;
-                placedCenters.push(newPosition.center);
-            } else {
-                isPlaceMiss = true
-            }
-        });
-        if (isPlaceMiss){
-            window.alert("うまく単語プレートを配置できませんでした。画面が小さすぎる可能性があります。\n再読込します。")
-            location.reload()
-        }
-    }
-
     function highlightCurrentPanel() {
         let currentPanel = document.getElementById(`panel-${current-1}`);
         let nextPanel = document.getElementById(`panel-${(current)}`)
@@ -211,26 +151,6 @@ document.addEventListener("DOMContentLoaded",() => {
         }
     }
 
-    function resultIndicate(){
-        const table = document.getElementById("word-table");
-        wordObjList.forEach(element => {
-            let tableRow = document.createElement("div");
-            let tableDataWord = document.createElement("p");
-            let tableDataRemarks = document.createElement("p");
-            
-            tableDataWord.textContent = element["word"];
-            tableDataRemarks.textContent = element["remarks"]
-            
-            tableRow.classList.add("typed-words")
-            tableDataWord.classList.add("words")
-            tableDataRemarks.classList.add("words")
-            
-            tableRow.appendChild(tableDataWord);
-            tableRow.appendChild(tableDataRemarks);
-            table.appendChild(tableRow);
-        })
-        wordMeanSection.style.display = "block";
-    }
 
     function processEndGame(){
         clearTimeout(timeoutID);
@@ -306,8 +226,5 @@ document.addEventListener("DOMContentLoaded",() => {
         else if(startFlag == 2 && event.key.length < 2 && event.key.match(/^[a-zA-Z0-9!-/:-@¥[-`{-~\s]*$/)){
             inputCheck(event.key);
         }
-        // else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
-        //     this.location.reload()
-        // }
     })
 })

@@ -94,7 +94,7 @@ a {
   border: 1px solid #0f9b20;
   margin-left: 1%;
   flex-basis: 30%;
-  /* box-sizing: border-box; */
+  
   cursor: pointer;
   text-align: center;
   min-width: 242px;
@@ -132,8 +132,6 @@ a {
   height: 60vh;
   min-width: 400px;
   position: relative;
-  /* justify-content: space-around;
-  align-items: center; */
   margin: 0 auto;
 }
 
@@ -141,20 +139,14 @@ a {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5列 */
   grid-template-rows: repeat(4, 1fr);    /* 4行 */
-  gap: 10px; /* 円の間隔（お好みで） */
+  gap: 10px; 
   justify-items: center;
   align-items: center;
   margin: 0 auto;
 }
-/* 
-@keyframes scaleUpDown {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-} */
 
 .panel {
-  /* animation: scaleUpDown 1s infinite; */
+  
   background: #6cf;
   color: #222;
   border-radius: 50%;
@@ -171,10 +163,10 @@ a {
   transition: transform 0.3s ease;
   opacity: 0.8;
   box-shadow: 0 2px 8px #4448;
-  /* position: absolute; */
+  
 }
 .panel:hover{
-  /* display: inline-block; */
+  
   transform: scale(1.2)
 }
 

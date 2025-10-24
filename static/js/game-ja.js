@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded",function() {
     const timeText = document.getElementById("timeText");
     const otherResult = document.getElementById("other-result");
     const resultSection = document.getElementById("results");
-    const wordMeanSection = document.getElementById("word-meanings");
 
     //効果音
     const clearSound = document.getElementById("type_clear")
@@ -110,22 +109,6 @@ document.addEventListener("DOMContentLoaded",function() {
         document.getElementById("panel-0").classList.add("active")
     };
 
-    function randomPanelPlacement() {
-        const panels = Array.from(panelContainer.getElementsByClassName("panel"));
-        const containerWidth = panelContainer.clientWidth;
-        const containerHeight = panelContainer.clientHeight;
-        const panelSize = panels[0].clientWidth;// 円の直径
-
-        panels.forEach(panel => {
-            // パネルのサイズ分を引いて画面からはみ出ないように設定する
-            const randomLeft = Math.random() * (containerWidth - panelSize);
-            const randomTop = Math.random() * (containerHeight - panelSize);
-            
-            panel.style.left = `${randomLeft}px`;
-            panel.style.top = `${randomTop}px`;
-            }
-        )
-    }
 
     function highlightCurrentPanel() {
         let currentPanel = document.getElementById(`panel-${current-1}`);
@@ -174,27 +157,6 @@ document.addEventListener("DOMContentLoaded",function() {
             left: 0,     // 横スクロールの位置（通常は 0 のままでOK）
             behavior: "smooth"
         })
-    }
-
-    function resultIndicate(){
-        const table = document.getElementById("word-table");
-        wordObjList.forEach(element => {
-            const tableRow = document.createElement("div");
-            const tableDataWord = document.createElement("p");
-            const tableDataRemarks = document.createElement("p");
-
-            tableDataWord.textContent = element.example;
-            tableDataRemarks.textContent = element.kana.all;
-
-            tableRow.classList.add("typed-words")
-            tableDataWord.classList.add("words")
-            tableDataRemarks.classList.add("words")
-
-            tableRow.appendChild(tableDataWord);
-            tableRow.appendChild(tableDataRemarks);
-            table.appendChild(tableRow);
-        })
-        wordMeanSection.style.display = "block";
     }
 
     function inputCheck(key){
@@ -269,8 +231,5 @@ document.addEventListener("DOMContentLoaded",function() {
         else if(startFlag == 2 && event.key.length < 2 && event.key.match(/^[a-zA-Z0-9!-/:-@¥[-`{-~\s]*$/)){
             inputCheck(event.key);
         }
-        // else if(startFlag == 3 && (event.key =="Enter" || event.key == "Escape")){
-        //     this.location.reload()
-        // }
     })
 })
